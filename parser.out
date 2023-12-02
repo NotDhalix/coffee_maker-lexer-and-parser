@@ -1,0 +1,321 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> command
+Rule 1     command -> command SEPARATOR command
+Rule 2     command -> routine
+Rule 3     command -> empty
+Rule 4     routine -> START instruction STOP
+Rule 5     routine -> START setuping STOP
+Rule 6     setuping -> SETUP instruction
+Rule 7     setuping -> SHOW SETUP
+Rule 8     instruction -> MAKE_COFFEE time
+Rule 9     instruction -> WARM_DEPOSIT temperature time
+Rule 10    time -> NOW
+Rule 11    time -> IN TIME
+Rule 12    time -> AT TIME
+Rule 13    temperature -> LOW
+Rule 14    temperature -> MEDIUM
+Rule 15    temperature -> HIGH
+Rule 16    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AT                   : 12
+HIGH                 : 15
+IN                   : 11
+LOW                  : 13
+MAKE_COFFEE          : 8
+MEDIUM               : 14
+NOW                  : 10
+SEPARATOR            : 1
+SETUP                : 6 7
+SHOW                 : 7
+START                : 4 5
+STOP                 : 4 5
+TIME                 : 11 12
+WARM_DEPOSIT         : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+command              : 1 1 0
+empty                : 3
+instruction          : 4 6
+routine              : 2
+setuping             : 5
+temperature          : 9
+time                 : 8 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . command
+    (1) command -> . command SEPARATOR command
+    (2) command -> . routine
+    (3) command -> . empty
+    (4) routine -> . START instruction STOP
+    (5) routine -> . START setuping STOP
+    (16) empty -> .
+
+    START           shift and go to state 4
+    SEPARATOR       reduce using rule 16 (empty -> .)
+    $end            reduce using rule 16 (empty -> .)
+
+    command                        shift and go to state 1
+    routine                        shift and go to state 2
+    empty                          shift and go to state 3
+
+state 1
+
+    (0) S' -> command .
+    (1) command -> command . SEPARATOR command
+
+    SEPARATOR       shift and go to state 5
+
+
+state 2
+
+    (2) command -> routine .
+
+    SEPARATOR       reduce using rule 2 (command -> routine .)
+    $end            reduce using rule 2 (command -> routine .)
+
+
+state 3
+
+    (3) command -> empty .
+
+    SEPARATOR       reduce using rule 3 (command -> empty .)
+    $end            reduce using rule 3 (command -> empty .)
+
+
+state 4
+
+    (4) routine -> START . instruction STOP
+    (5) routine -> START . setuping STOP
+    (8) instruction -> . MAKE_COFFEE time
+    (9) instruction -> . WARM_DEPOSIT temperature time
+    (6) setuping -> . SETUP instruction
+    (7) setuping -> . SHOW SETUP
+
+    MAKE_COFFEE     shift and go to state 8
+    WARM_DEPOSIT    shift and go to state 9
+    SETUP           shift and go to state 10
+    SHOW            shift and go to state 11
+
+    instruction                    shift and go to state 6
+    setuping                       shift and go to state 7
+
+state 5
+
+    (1) command -> command SEPARATOR . command
+    (1) command -> . command SEPARATOR command
+    (2) command -> . routine
+    (3) command -> . empty
+    (4) routine -> . START instruction STOP
+    (5) routine -> . START setuping STOP
+    (16) empty -> .
+
+    START           shift and go to state 4
+    SEPARATOR       reduce using rule 16 (empty -> .)
+    $end            reduce using rule 16 (empty -> .)
+
+    command                        shift and go to state 12
+    routine                        shift and go to state 2
+    empty                          shift and go to state 3
+
+state 6
+
+    (4) routine -> START instruction . STOP
+
+    STOP            shift and go to state 13
+
+
+state 7
+
+    (5) routine -> START setuping . STOP
+
+    STOP            shift and go to state 14
+
+
+state 8
+
+    (8) instruction -> MAKE_COFFEE . time
+    (10) time -> . NOW
+    (11) time -> . IN TIME
+    (12) time -> . AT TIME
+
+    NOW             shift and go to state 16
+    IN              shift and go to state 17
+    AT              shift and go to state 18
+
+    time                           shift and go to state 15
+
+state 9
+
+    (9) instruction -> WARM_DEPOSIT . temperature time
+    (13) temperature -> . LOW
+    (14) temperature -> . MEDIUM
+    (15) temperature -> . HIGH
+
+    LOW             shift and go to state 20
+    MEDIUM          shift and go to state 21
+    HIGH            shift and go to state 22
+
+    temperature                    shift and go to state 19
+
+state 10
+
+    (6) setuping -> SETUP . instruction
+    (8) instruction -> . MAKE_COFFEE time
+    (9) instruction -> . WARM_DEPOSIT temperature time
+
+    MAKE_COFFEE     shift and go to state 8
+    WARM_DEPOSIT    shift and go to state 9
+
+    instruction                    shift and go to state 23
+
+state 11
+
+    (7) setuping -> SHOW . SETUP
+
+    SETUP           shift and go to state 24
+
+
+state 12
+
+    (1) command -> command SEPARATOR command .
+    (1) command -> command . SEPARATOR command
+
+  ! shift/reduce conflict for SEPARATOR resolved as shift
+    $end            reduce using rule 1 (command -> command SEPARATOR command .)
+    SEPARATOR       shift and go to state 5
+
+  ! SEPARATOR       [ reduce using rule 1 (command -> command SEPARATOR command .) ]
+
+
+state 13
+
+    (4) routine -> START instruction STOP .
+
+    SEPARATOR       reduce using rule 4 (routine -> START instruction STOP .)
+    $end            reduce using rule 4 (routine -> START instruction STOP .)
+
+
+state 14
+
+    (5) routine -> START setuping STOP .
+
+    SEPARATOR       reduce using rule 5 (routine -> START setuping STOP .)
+    $end            reduce using rule 5 (routine -> START setuping STOP .)
+
+
+state 15
+
+    (8) instruction -> MAKE_COFFEE time .
+
+    STOP            reduce using rule 8 (instruction -> MAKE_COFFEE time .)
+
+
+state 16
+
+    (10) time -> NOW .
+
+    STOP            reduce using rule 10 (time -> NOW .)
+
+
+state 17
+
+    (11) time -> IN . TIME
+
+    TIME            shift and go to state 25
+
+
+state 18
+
+    (12) time -> AT . TIME
+
+    TIME            shift and go to state 26
+
+
+state 19
+
+    (9) instruction -> WARM_DEPOSIT temperature . time
+    (10) time -> . NOW
+    (11) time -> . IN TIME
+    (12) time -> . AT TIME
+
+    NOW             shift and go to state 16
+    IN              shift and go to state 17
+    AT              shift and go to state 18
+
+    time                           shift and go to state 27
+
+state 20
+
+    (13) temperature -> LOW .
+
+    NOW             reduce using rule 13 (temperature -> LOW .)
+    IN              reduce using rule 13 (temperature -> LOW .)
+    AT              reduce using rule 13 (temperature -> LOW .)
+
+
+state 21
+
+    (14) temperature -> MEDIUM .
+
+    NOW             reduce using rule 14 (temperature -> MEDIUM .)
+    IN              reduce using rule 14 (temperature -> MEDIUM .)
+    AT              reduce using rule 14 (temperature -> MEDIUM .)
+
+
+state 22
+
+    (15) temperature -> HIGH .
+
+    NOW             reduce using rule 15 (temperature -> HIGH .)
+    IN              reduce using rule 15 (temperature -> HIGH .)
+    AT              reduce using rule 15 (temperature -> HIGH .)
+
+
+state 23
+
+    (6) setuping -> SETUP instruction .
+
+    STOP            reduce using rule 6 (setuping -> SETUP instruction .)
+
+
+state 24
+
+    (7) setuping -> SHOW SETUP .
+
+    STOP            reduce using rule 7 (setuping -> SHOW SETUP .)
+
+
+state 25
+
+    (11) time -> IN TIME .
+
+    STOP            reduce using rule 11 (time -> IN TIME .)
+
+
+state 26
+
+    (12) time -> AT TIME .
+
+    STOP            reduce using rule 12 (time -> AT TIME .)
+
+
+state 27
+
+    (9) instruction -> WARM_DEPOSIT temperature time .
+
+    STOP            reduce using rule 9 (instruction -> WARM_DEPOSIT temperature time .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for SEPARATOR in state 12 resolved as shift
